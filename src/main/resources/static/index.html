@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter demo</title>
+</head>
+<body>
+    <h1>Counter demo</h1>
+    <p id="counter"></p>
+    <button id="increment">Increment</button>
+
+    <script>
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                updateCounter(xmlHttp.responseText);
+            }
+        }
+        xmlHttp.open("GET", '/api/counter', true); // true for asynchronous
+        xmlHttp.send(null);
+
+        function updateCounter(response) {
+            const result = JSON.parse(response);
+            document.getElementById('counter').innerText = result.value;
+        }
+
+        document.getElementById('increment').addEventListener('click', function() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    updateCounter(xmlHttp.responseText);
+                }
+            }
+            xmlHttp.open("POST", '/api/counter/increment', true); // true for asynchronous
+            xmlHttp.send(null);
+        });
+    </script>
+</body>
+</html>
